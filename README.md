@@ -210,23 +210,23 @@ No saga state machine. No compensating transactions. No message queues. No dead 
 ## How It Works
 
 ```
-┌──────────┐   send_intent()      ┌──────────────┐
-│  Client   │ ──────────────────►  │              │
-│           │                      │  AXME Cloud  │
-│           │ ◄── observe(SSE) ──  │  (platform)  │
-└──────────┘                      └──────┬───────┘
-                                          │
-                    ┌─────────────────────┼─────────────────────┐
-                    │                     │                     │
-             ┌──────▼───────┐      ┌──────▼───────┐      ┌──────▼───────┐
-             │  Inventory   │      │   Payment    │      │  Shipping    │
-             │  Service     │      │   Service    │      │  Service     │
-             │  (agent)     │      │   (agent)    │      │  (agent)     │
-             │              │      │              │      │              │
-             │  reserve()   │      │  charge()    │      │  ship()      │
-             └──────────────┘      └──────────────┘      └──────────────┘
+┌────────────┐  send_intent()   ┌────────────────┐
+│            │ ───────────────> │                │
+│   Client   │                  │   AXME Cloud   │
+│            │ <─ observe(SSE)  │   (platform)   │
+└────────────┘                  └───────┬────────┘
+                                        │
+                  ┌─────────────────────┼─────────────────────┐
+                  │                     │                     │
+          ┌───────▼────────┐    ┌───────▼────────┐    ┌───────▼────────┐
+          │   Inventory    │    │    Payment     │    │   Shipping     │
+          │   Service      │    │    Service     │    │   Service      │
+          │   (agent)      │    │    (agent)     │    │   (agent)      │
+          │                │    │                │    │                │
+          │   reserve()    │    │   charge()     │    │   ship()       │
+          └────────────────┘    └────────────────┘    └────────────────┘
 
-Step 1: reserve inventory → Step 2: charge payment → Step 3: create shipment
+Step 1: reserve inventory -> Step 2: charge payment -> Step 3: create shipment
 ```
 
 1. Client submits an order **intent** via AXME SDK
