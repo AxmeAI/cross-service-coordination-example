@@ -9,17 +9,17 @@
  *   mvn compile exec:java -Dexec.mainClass="CrossServiceCoordination"
  */
 
-import ai.axme.sdk.AxmeClient;
-import ai.axme.sdk.AxmeClientConfig;
+import dev.axme.sdk.AxmeClient;
+import dev.axme.sdk.AxmeClientConfig;
+import dev.axme.sdk.RequestOptions;
+import dev.axme.sdk.ObserveOptions;
 import java.util.List;
 import java.util.Map;
 
 public class CrossServiceCoordination {
     public static void main(String[] args) throws Exception {
         var client = new AxmeClient(
-            AxmeClientConfig.builder()
-                .apiKey(System.getenv("AXME_API_KEY"))
-                .build()
+            AxmeClientConfig.forCloud(System.getenv("AXME_API_KEY"))
         );
 
         // Submit order — coordinates across inventory, payment, and shipping
@@ -39,11 +39,11 @@ public class CrossServiceCoordination {
                     "zip", "94102"
                 )
             )
-        ));
+        ), new RequestOptions());
         System.out.println("Order submitted: " + intentId);
 
         // Wait for full multi-service workflow to complete
-        var result = client.waitFor(intentId);
-        System.out.println("Final status: " + result.getStatus());
+        var result = client.waitFor(intentId, new ObserveOptions());
+        System.out.println("Final status: " + result.get("status"));
     }
 }

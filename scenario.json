@@ -1,0 +1,40 @@
+{
+  "scenario_id": "cross-service-coordination.demo.v1",
+  "title": "Cross-service coordination - order pipeline",
+  "description": "Inventory check, payment, and shipping coordinated through intent lifecycle. No central orchestrator needed.",
+
+  "agents": [
+    {
+      "role": "order_coordinator",
+      "address": "order-coordinator-demo",
+      "display_name": "Order Coordinator",
+      "delivery_mode": "stream",
+      "create_if_missing": true
+    }
+  ],
+
+  "workflow": {
+    "steps": [
+      {
+        "step_id": "coordinate_order",
+        "tool_id": "tool.agent.task.v1",
+        "assigned_to": "order_coordinator",
+        "step_deadline_seconds": 120
+      }
+    ]
+  },
+
+  "intent": {
+    "type": "intent.order.coordinate.v1",
+    "payload": {
+      "order_id": "ORD-7734",
+      "items": [
+        {"sku": "LAPTOP-PRO", "quantity": 1},
+        {"sku": "USB-CABLE", "quantity": 3}
+      ],
+      "customer_id": "CUST-9012",
+      "shipping_address": "456 Oak Ave, Springfield, US"
+    },
+    "max_delivery_attempts": 3
+  }
+}
