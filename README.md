@@ -5,7 +5,7 @@ Services A, B, C need to coordinate. You build a central orchestrator. Or implem
 **There is a better way.** Model each step as an intent. The platform coordinates delivery, tracks progress, and handles failures across services.
 
 > **Alpha** · Built with [AXME](https://github.com/AxmeAI/axme) (AXP Intent Protocol).
-> [cloud.axme.ai](https://cloud.axme.ai) · [hello@axme.ai](mailto:hello@axme.ai)
+> [cloud.axme.ai](https://cloud.axme.ai) · [contact@axme.ai](mailto:contact@axme.ai)
 
 ---
 
